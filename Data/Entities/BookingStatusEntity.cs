@@ -2,7 +2,7 @@
 
 public class BookingStatusEntity
 {
-    public string Id { get; set; } = Guid.NewGuid().ToString();
+    public int Id { get; set; }
     
     public string Name { get; set; } = null!;
 }

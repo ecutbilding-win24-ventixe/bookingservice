@@ -12,10 +12,10 @@ public class BookingEntity
     public DateTime CreateAt { get; set; } = DateTime.UtcNow;
     public string PackageTypeId { get; set; } = null!;
     public string EventPriceId { get; set; } = null!;
-    public int Quantity { get; set; } = 1;
+    public int Quantity { get; set; }
 
     [ForeignKey(nameof(BookingStatus))]
-    public string BookingStatusId { get; set; } = null!;
+    public int BookingStatusId { get; set; }
     public BookingStatusEntity BookingStatus { get; set; } = null!;
 
 }

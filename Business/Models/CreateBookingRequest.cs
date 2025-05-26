@@ -1,6 +1,8 @@
-﻿namespace Domain.Models;
+﻿using Domain.Models;
 
-public class Booking
+namespace Business.Models;
+
+public class CreateBookingRequest
 {
     public string Id { get; set; } = null!;
     public string EventId { get; set; } = null!;
@@ -11,5 +13,6 @@ public class Booking
     public string PackageTypeId { get; set; } = null!;
     public string EventPriceId { get; set; } = null!;
     public int Quantity { get; set; } = 1;
-    public int BookingStatusId { get; set; }
+    public BookingStatus BookingStatus { get; set; } = null!;
 }
+
