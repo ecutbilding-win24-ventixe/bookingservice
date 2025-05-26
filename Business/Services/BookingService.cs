@@ -102,4 +102,21 @@ public class BookingService(IBookingRepository bookingRepository, IHttpClientFac
         }
     }
 
+    public async Task<BookingResult<Booking>> GetBookingByIdAsync(string bookingId)
+    {
+        if (string.IsNullOrEmpty(bookingId))
+            return new BookingResult<Booking> { Succeeded = false, StatusCode = 400, Message = "Booking ID cannot be null or empty." };
+        try
+        {
+            var result = await _bookingRepository.GetAsync(b => b.Id == bookingId, b => b.BookingStatus);
+            if (!result.Succeeded || result.Result == null)
+                return new BookingResult<Booking> { Succeeded = false, StatusCode = 404, Message = "Booking not found." };
+            var booking = result.Result.MapTo<Booking>();
+            return new BookingResult<Booking> { Succeeded = true, StatusCode = 200, Result = booking };
+        }
+        catch (Exception ex)
+        {
+            return new BookingResult<Booking> { Succeeded = false, StatusCode = 500, Message = $"An error occurred: {ex.Message}" };
+        }
+    }
 }

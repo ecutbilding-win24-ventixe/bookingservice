@@ -34,4 +34,16 @@ public class BookingController(IBookingService bookingService) : ControllerBase
           ? Ok(result)
           : StatusCode(result.StatusCode, result);
     }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetBookingByIdAsync(string id)
+    {
+        if (string.IsNullOrEmpty(id))
+            return BadRequest("Booking ID cannot be null or empty.");
+
+        var result = await _bookingService.GetBookingByIdAsync(id);
+        return result.Succeeded
+          ? Ok(result)
+          : StatusCode(result.StatusCode, result);
+    }
 }
