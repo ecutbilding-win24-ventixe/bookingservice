@@ -1,9 +1,10 @@
 ﻿using Business.Models;
+using Domain.Models;
 
-namespace Business.Interfaces
+namespace Business.Interfaces;
+
+public interface IBookingService
 {
-    public interface IBookingService
-    {
-        Task<BookingResult> CreateBookingAsync(CreateBookingRequest request);
-    }
+    Task<BookingResult> CreateBookingAsync(CreateBookingRequest request);
+    Task<BookingResult<IEnumerable<Booking>>> GetAllBookingsAsync();
 }

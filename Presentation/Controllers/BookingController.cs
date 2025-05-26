@@ -26,4 +26,12 @@ public class BookingController(IBookingService bookingService) : ControllerBase
           : StatusCode(result.StatusCode, result);
     }
 
+    [HttpGet]
+    public async Task<IActionResult> GetAllBookingsAsync()
+    {
+        var result = await _bookingService.GetAllBookingsAsync();
+        return result.Succeeded
+          ? Ok(result)
+          : StatusCode(result.StatusCode, result);
+    }
 }

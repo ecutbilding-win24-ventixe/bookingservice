@@ -85,4 +85,21 @@ public class BookingService(IBookingRepository bookingRepository, IHttpClientFac
         }
     }
 
+    public async Task<BookingResult<IEnumerable<Booking>>> GetAllBookingsAsync()
+    {
+        try
+        {
+            var result = await _bookingRepository.GetAllAsync(orderByDescending: true, sortBy: b => b.CreateAt, includes: [x => x.BookingStatus]);
+            if (!result.Succeeded || result.Result == null)
+                return new BookingResult<IEnumerable<Booking>> { Succeeded = false, StatusCode = 404, Message = "Event not found" };
+
+            var bookings = result.Result.Select(b => b.MapTo<Booking>()).ToList();
+            return new BookingResult<IEnumerable<Booking>> { Message = "Bookings retrieved successfully", Succeeded = true, StatusCode = 200, Result = bookings };
+        }
+        catch (Exception ex)
+        {
+            return new BookingResult<IEnumerable<Booking>> { Succeeded = false, StatusCode = 500, Message = $"An error occurred: {ex.Message}" };
+        }
+    }
+
 }
